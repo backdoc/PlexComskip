@@ -232,7 +232,7 @@ logging.info(f'Going to concatenate {len(segment_files)} files from the segment 
 try:
   if CONVERT:
     video_basename = os.path.splitext(video_basename)[0] + '.mp4'
-    cmd = NICE_ARGS + [FFMPEG_PATH, '-y', '-f', 'concat', '-i', segment_list_file_path, '-c:v', 'libx264', os.path.join(temp_dir, video_basename)]
+    cmd = NICE_ARGS + [FFMPEG_PATH, '-y', '-f', 'concat', '-i', segment_list_file_path, '-filter:v', 'yadif', '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-c:a', 'aac', '-b:a', '256k', os.path.join(temp_dir, video_basename)]
   else:
     cmd = NICE_ARGS + [FFMPEG_PATH, '-y', '-f', 'concat', '-i', segment_list_file_path, '-c', 'copy', os.path.join(temp_dir, video_basename)]
   logging.info(f'[ffmpeg] Command: {cmd}')
